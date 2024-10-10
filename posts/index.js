@@ -22,19 +22,20 @@ app.post('/posts', async (req, res) => {
     const id = randomBytes(4).toString('hex');
     const { title } = req.body;
 
-    posts[id] = {
-        id, title
-    };
+    posts[id] = { id, title };
 
-    await axios.post('http://localhost:3005/events', {
-        type: 'PostCreated',
-        data: {
-            id, title
-        }
-    });
+    try {
+        await axios.post('http://localhost:3005/events', {
+            type: 'PostCreated',
+            data: { id, title }
+        });
+    } catch (error) {
+        console.error('Error posting event:', error.message);
+    }
 
     res.status(201).send(posts[id]);
 });
+
 
 app.listen(3000, () => {
     console.log('Listening on 3000');
