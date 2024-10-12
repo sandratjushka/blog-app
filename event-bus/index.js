@@ -11,7 +11,9 @@ app.post('/events', (req, res) => {
     const services = [
         'http://localhost:3000/events',
         'http://localhost:3001/events',
-        'http://localhost:3002/events' 
+        'http://localhost:3002/events', 
+        'http://localhost:3003/events' 
+
     ];
 
     services.forEach(async (serviceUrl) => {
