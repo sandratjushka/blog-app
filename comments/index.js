@@ -28,41 +28,50 @@ app.post('/posts/:id/comments', async (req, res) => {
             data: {
                 id: commentId,
                 content,
-                postId: req.params.id
-                status:'pending'
+                postId: req.params.id,
+                status: 'pending'
             }
         });
     } catch (error) {
         console.error('Error posting event:', error.message);
+        return res.status(500).send({ error: 'Failed to post event.' });
     }
 
     res.status(201).send(comments);
 });
 
-
 app.post('/events', async (req, res) => {
     console.log('Event Received', req.body.type);
-
     const { type, data } = req.body;
 
     if (type === 'CommentModerated') {
         const { postId, id, status } = data;
         const comments = commentsByPostId[postId];
 
-        const comment = comments.find(comment => {
-            return comment.id === id;
-        });
-        comment.status = status;
+        if (comments) {
+            const comment = comments.find(comment => comment.id === id);
+            if (comment) {
+                comment.status = status;
 
-        await axios.post('http://localhost:3005/events' {
-            type: 'CommentUpdated',
-            data: {
-                id,
-                status,
-                postId,
-                content
+                try {
+                    await axios.post('http://localhost:3005/events', {
+                        type: 'CommentUpdated',
+                        data: {
+                            id,
+                            status,
+                            postId,
+                            content: comment.content
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error posting updated comment event:', error.message);
+                }
+            } else {
+                console.warn(`Comment with ID ${id} not found for post ${postId}.`);
             }
-        });
+        } else {
+            console.warn(`No comments found for post ${postId}.`);
+        }
     }
 
     res.send({});
