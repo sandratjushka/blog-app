@@ -28,7 +28,7 @@ app.post('/posts/:id/comments', async (req, res) => {
             data: {
                 id: commentId,
                 content,
-                postId: req.params.id,
+                postId: req.params.id
                 status:'pending'
             }
         });
@@ -52,23 +52,21 @@ app.post('/events', async (req, res) => {
         const comment = comments.find(comment => {
             return comment.id === id;
         });
-        
         comment.status = status;
 
-        await axios.post('http://localhost:3005/events', {
+        await axios.post('http://localhost:3005/events' {
             type: 'CommentUpdated',
             data: {
                 id,
                 status,
                 postId,
-                content: comment.content 
+                content
             }
         });
     }
 
     res.send({});
 });
-
 
 app.listen(3001, () => {
     console.log('Listening on 3001');

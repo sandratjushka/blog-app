@@ -5,8 +5,12 @@ const axios = require('axios');
 const app = express();
 app.use(bodyParser.json());
 
+const events = [];
+
 app.post('/events', (req, res) => {
     const event = req.body;
+
+    events.push(event);
 
     const services = [
         'http://localhost:3000/events',
@@ -26,6 +30,10 @@ app.post('/events', (req, res) => {
     });
 
     res.send({ status: 'OK' });
+});
+
+app.post('/events', (req, res) => {
+    res.send(events);
 });
 
 app.listen(3005, () => {
