@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tickets-depl
+  name: posts-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: posts
-    template:
+  template:
       metadata:
         labels:
           app: posts
       spec:
         containers:
           - name: posts
-            image: docker.io/sandratj/posts:0.0.1
+            image: docker.io/sandratj/posts:0.0.5
