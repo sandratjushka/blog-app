@@ -13,10 +13,10 @@ app.post('/events', async (req, res) => {
     events.push(event);
 
     const services = [
-        'http://localhost:3000/events', // Posts service
-        'http://localhost:3001/events', // Comments service
-        'http://localhost:3002/events', // Query service
-        'http://localhost:3003/events'  // Moderation service
+        'http://posts-clusterip-srv:3000/events', // Posts service
+        //'http://localhost:3001/events', // Comments service
+        //'http://localhost:3002/events', // Query service
+        //'http://localhost:3003/events'  // Moderation service
     ];
 
     // Send the event to all services
