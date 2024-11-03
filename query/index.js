@@ -61,7 +61,7 @@ app.post('/events', (req, res) => {
 app.listen(3002, async () => {
     console.log('Listening on 3002');
     try {
-        const response = await axios.get('http://localhost:3005/events');
+        const response = await axios.get('http://event-bus-srv:3005/events');
         const events = response.data;
 
         for (let event of events) {
