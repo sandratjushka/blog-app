@@ -30,7 +30,8 @@ app.post('/posts', async (req, res) => {
             data: { id, title }
         });
     } catch (error) {
-        console.error('Error posting event:', error.message);
+        // Updated error handling to log more detailed information
+        console.error('Error posting event:', error.response ? error.response.data : error.message);
     }
 
     res.status(201).send(posts[id]);

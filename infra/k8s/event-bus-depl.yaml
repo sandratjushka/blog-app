@@ -28,3 +28,6 @@ spec:
       protocol: TCP
       port: 3005
       targetPort: 3005
+      
+      kubectl exec -it <posts-depl-7d49db5c58-qzl98> -- /bin/sh
+curl -s -o /dev/null -w "%{http_code}" http://event-bus-srv:3005/events
